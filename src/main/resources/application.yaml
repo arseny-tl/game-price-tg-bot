@@ -1,0 +1,6 @@
+spring:
+  main:
+    banner-mode: off
+
+cheap-shark:
+  url: https://www.cheapshark.com/api/1.0/

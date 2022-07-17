@@ -1,0 +1,22 @@
+services:
+  bot_backend:
+    image: org.tl.game-price-tg-bot:latest
+    ports:
+      - 8080
+    environment:
+      - GAMEPRICEBOT_TELEGRAM_TOKEN=${BOT_TOKEN:?Please set bot token in env file}
+      - GAMEPRICEBOT_TELEGRAM_BOT_USERNAME=${BOT_USERNAME:?Please set bot username in env file}
+    deploy:
+      resources:
+        limits:
+          memory: 640Mb # 512 + 128
+          cpus: 2
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:8080/game-price-tg-bot-api/actuator/health"]
+      interval: 2m
+      timeout: 1s
+      retries: 3
+      start_period: 40s
+networks:
+  default:
+    name: game-price-tg-bot-network

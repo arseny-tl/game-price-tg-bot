@@ -7,7 +7,6 @@ import org.springframework.core.ParameterNameDiscoverer;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.tl.gamepricetgbot.telegram.instrumentation.arguments.ArgumentResolver;
 import org.tl.gamepricetgbot.telegram.instrumentation.model.TelegramMessage;
 
@@ -54,7 +53,7 @@ public class TelegramInvokableCommand extends Command {
             return (BotApiMethod<?>) returnValue;
         } else if (String.class.isAssignableFrom(clazz)) {
             if (update.hasMessage() && update.getMessage().getChatId() != null) {
-                new SendMessage(update.getMessage().getChatId().toString(), (String) returnValue);
+                return new SendMessage(update.getMessage().getChatId().toString(), (String) returnValue);
             }
         }
         return null;

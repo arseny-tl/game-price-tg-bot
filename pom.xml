@@ -8,14 +8,18 @@
         <version>2.6.8</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>org.tl</groupId>
     <artifactId>game-price-tg-bot</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>game-price-tg-bot</name>
     <description>Game Price Telegram Bot</description>
+
     <properties>
         <java.version>17</java.version>
+        <gitflow-maven-plugin.version>1.18.0</gitflow-maven-plugin.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,6 +104,18 @@
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
                     <injectAllReactorProjects>true</injectAllReactorProjects>
                     <offline>true</offline>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.amashchenko.maven.plugin</groupId>
+                <artifactId>gitflow-maven-plugin</artifactId>
+                <version>${gitflow-maven-plugin.version}</version>
+                <configuration>
+                    <versionDigitToIncrement>1</versionDigitToIncrement>
+                    <hotfixVersionDigitToIncrement>2</hotfixVersionDigitToIncrement>
+                    <gitFlowConfig>
+                        <developmentBranch>master</developmentBranch>
+                    </gitFlowConfig>
                 </configuration>
             </plugin>
         </plugins>

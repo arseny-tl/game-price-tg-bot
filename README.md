@@ -29,6 +29,7 @@ Application:
 4. Tests
 
 Infrastructure:
+0. Mock deploy on commit in master branch (might be just mvn test)
 1. Bot Metrics (actuator - prometheus)
 2. Grafana dashboard (which route and how many times was called, mean/max/min time to process, etc.)
 3. k8s descriptors (minikube at least)

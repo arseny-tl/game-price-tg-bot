@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.bots.AbsSender;
+import org.tl.gamepricetgbot.telegram.instrumentation.BotApiMethodExecutor;
 
 import java.util.Map;
 
@@ -15,9 +15,9 @@ public class TelegramMessage {
     String message;
     Update update;
     Map<String, String> templateVariables;
-    AbsSender sender;
+    BotApiMethodExecutor sender;
 
-    public TelegramMessage(Update update, Map<String, String> templateVariables, AbsSender sender) {
+    public TelegramMessage(Update update, Map<String, String> templateVariables, BotApiMethodExecutor sender) {
         this.update = update;
         if (update.hasMessage() && update.getMessage().hasText()) {
             this.message = update.getMessage().getText();

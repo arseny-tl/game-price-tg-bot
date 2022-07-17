@@ -11,6 +11,7 @@ import org.tl.gamepricetgbot.telegram.instrumentation.BotRequestMessageDispatche
 import org.tl.gamepricetgbot.telegram.instrumentation.CommandContainer;
 import org.tl.gamepricetgbot.telegram.instrumentation.arguments.ArgumentResolver;
 import org.tl.gamepricetgbot.telegram.instrumentation.arguments.ArgumentResolverComposite;
+import org.tl.gamepricetgbot.telegram.instrumentation.intercept.BotInterceptorChain;
 
 import java.util.List;
 
@@ -29,12 +30,18 @@ public class TelegramBotConfiguration {
     }
 
     @Bean
-    public BotRequestMessageDispatcher botRequestMessageDispatcher(TelegramBotProperties properties, CommandContainer commandContainer, List<ArgumentResolver> argumentResolvers) {
+    public BotRequestMessageDispatcher botRequestMessageDispatcher(
+            TelegramBotProperties properties,
+            CommandContainer commandContainer,
+            List<ArgumentResolver> argumentResolvers,
+            BotInterceptorChain interceptorChain
+    ) {
         return new BotRequestMessageDispatcher(
                 properties::getBotUsername,
                 properties::getToken,
                 commandContainer,
-                new ArgumentResolverComposite(argumentResolvers)
+                new ArgumentResolverComposite(argumentResolvers),
+                interceptorChain
         );
     }
 }

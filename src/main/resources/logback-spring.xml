@@ -1,7 +1,7 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d [%thread] %-5level %logger{80} - %msg%n</pattern>
+            <pattern>%d [%thread] %replace([userId=%X{userId:-}] [chatId=%X{chatId:-}] [messageId=%X{messageId:-}] ){'\[\w*=\] ', ''} %-5level %logger{80} - %msg%n</pattern>
         </encoder>
     </appender>
 

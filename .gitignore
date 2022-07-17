@@ -34,4 +34,4 @@ build/
 
 
 ### ENV FILE ###
-/docker/.env
+docker/.env

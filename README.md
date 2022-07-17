@@ -18,7 +18,7 @@ Source files contain instrumentation similar to  https://github.com/xabgesagtx/t
 1. Create bot in telegram https://core.telegram.org/bots#3-how-do-i-create-a-bot
 2. Run maven goal: mvnw clean package
 3. In docker folder:
-   1. Set up MY_BOT_TOKEN/MY_BOT_USERNAME in env file with values from step 1
+   1. Set up BOT_TOKEN/BOT_USERNAME in [env file](https://docs.docker.com/compose/environment-variables/#the-env-file) with values from step 1
    2. Run docker-compose up
 
 ### TODO

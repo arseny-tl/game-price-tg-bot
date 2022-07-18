@@ -4,7 +4,7 @@ import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.bots.AbsSender;
+import org.tl.gamepricetgbot.telegram.instrumentation.BotApiMethodExecutor;
 import org.tl.gamepricetgbot.telegram.instrumentation.model.TelegramMessage;
 import org.tl.gamepricetgbot.telegram.instrumentation.support.MessageParameter;
 
@@ -18,7 +18,7 @@ public class CommandArgumentResolver implements ArgumentResolver {
                 && (Update.class.isAssignableFrom(clazz)
                 || TelegramMessage.class.isAssignableFrom(clazz)
                 || Chat.class.isAssignableFrom(clazz)
-                || AbsSender.class.isAssignableFrom(clazz));
+                || BotApiMethodExecutor.class.isAssignableFrom(clazz));
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CommandArgumentResolver implements ArgumentResolver {
             return telegramMessage.getUpdate();
         } else if (TelegramMessage.class.isAssignableFrom(clazz)) {
             return telegramMessage;
-        } else if (AbsSender.class.isAssignableFrom(clazz)) {
+        } else if (BotApiMethodExecutor.class.isAssignableFrom(clazz)) {
             return telegramMessage.getSender();
         } else if (Chat.class.isAssignableFrom(clazz)) {
             return telegramMessage.getUpdate().getMessage().getChat();

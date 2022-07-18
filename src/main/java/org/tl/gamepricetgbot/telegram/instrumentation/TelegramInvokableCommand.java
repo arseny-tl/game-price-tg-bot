@@ -5,6 +5,7 @@ import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.tl.gamepricetgbot.telegram.instrumentation.arguments.ArgumentResolver;
@@ -20,7 +21,7 @@ public class TelegramInvokableCommand extends Command {
     }
 
     @SneakyThrows
-    public BotApiMethod<?> callMethod(TelegramMessage telegramMessage) {
+    public PartialBotApiMethod<?> callMethod(TelegramMessage telegramMessage) {
         Object[] args = createArgs(telegramMessage);
         Object result = doInvokeSafe(args);
         return resolveReturnValue(result, getReturnValueMethodParameter(result), telegramMessage);
@@ -46,7 +47,7 @@ public class TelegramInvokableCommand extends Command {
         return result;
     }
 
-    private BotApiMethod<?> resolveReturnValue(Object returnValue, MethodParameter returnValueMethodParameter, TelegramMessage telegramMessage) {
+    private PartialBotApiMethod<?> resolveReturnValue(Object returnValue, MethodParameter returnValueMethodParameter, TelegramMessage telegramMessage) {
         Class<?> clazz = returnValueMethodParameter.getParameterType();
         Update update = telegramMessage.getUpdate();
         if (BotApiMethod.class.isAssignableFrom(clazz)) {
@@ -55,6 +56,8 @@ public class TelegramInvokableCommand extends Command {
             if (update.hasMessage() && update.getMessage().getChatId() != null) {
                 return new SendMessage(update.getMessage().getChatId().toString(), (String) returnValue);
             }
+        } else if (PartialBotApiMethod.class.isAssignableFrom(clazz)) {
+            return (PartialBotApiMethod<?>) returnValue;
         }
         return null;
     }

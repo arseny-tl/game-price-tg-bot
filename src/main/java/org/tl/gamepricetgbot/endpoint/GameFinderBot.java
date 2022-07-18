@@ -2,14 +2,13 @@ package org.tl.gamepricetgbot.endpoint;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
-import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.tl.gamepricetgbot.service.CheapSharkService;
+import org.tl.gamepricetgbot.telegram.instrumentation.BotApiMethodExecutor;
 import org.tl.gamepricetgbot.telegram.instrumentation.support.BotController;
 import org.tl.gamepricetgbot.telegram.instrumentation.support.BotRequest;
 import org.tl.gamepricetgbot.telegram.instrumentation.support.MessageParameter;
@@ -30,7 +29,7 @@ public class GameFinderBot {
     }
 
     @BotRequest("/findGame {gameName}")
-    public void findGame(@MessageParameter("gameName") String gameName, AbsSender sender, Chat chat) {
+    public void findGame(@MessageParameter("gameName") String gameName, BotApiMethodExecutor sender, Chat chat) {
         cheapSharkService.findGame(gameName).forEach(game -> {
             String text = game.getGameName() + " - " + game.getCheapestPrice() + "$\n"
                     + "Link: " + game.composeUrlToShop();
@@ -43,16 +42,8 @@ public class GameFinderBot {
                         .build();
                 sender.execute(response);
             } catch (IOException | TelegramApiException e) {
-                executeSafely(sender, SendMessage.builder().chatId(chat.getId().toString()).text(text).build());
+                sender.executeSafely(SendMessage.builder().chatId(chat.getId().toString()).text(text).build());
             }
         });
-    }
-
-    private void executeSafely(AbsSender sender, BotApiMethod<?> botApiMethod) {
-        try {
-            sender.execute(botApiMethod);
-        } catch (TelegramApiException e) {
-            log.info("Unable to reply", e);
-        }
     }
 }

@@ -22,14 +22,14 @@ Source files contain instrumentation similar to  https://github.com/xabgesagtx/t
    2. Run docker-compose up
 
 ### TODO
-Application:
-1. Logging
+Application:  
+1. ~Logging~
 2. Concurrency
 3. Reactive
 4. Tests
 
 Infrastructure:
-0. Mock deploy on commit in master branch (might be just mvn test)
-1. Bot Metrics (actuator - prometheus)
-2. Grafana dashboard (which route and how many times was called, mean/max/min time to process, etc.)
-3. k8s descriptors (minikube at least)
+1. Mock deploy on commit in master branch (might be just mvn test)
+2. Bot Metrics (actuator - prometheus)
+3. Grafana dashboard (which route and how many times was called, mean/max/min time to process, etc.)
+4. k8s descriptors (minikube at least)
